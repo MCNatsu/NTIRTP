@@ -1,0 +1,37 @@
+name: NTIRTP
+version: '${project.version}'
+main: me.aq.plugin.ntirTP.NTIRTP
+api-version: 1.18
+commands:
+  tpa:
+    usage:
+    description:
+  agree:
+    usage:
+    description:
+  deny:
+    usage:
+    description:
+  cancel:
+    usage:
+    description:
+  spawn:
+    usage:
+    description:
+  setspawn:
+    usage:
+    description:
+  back:
+    usage:
+    description:
+  sethome:
+    usage:
+    description:
+  home:
+    usage:
+    description:
+  delhome:
+    usage:
+    description:
+
+
