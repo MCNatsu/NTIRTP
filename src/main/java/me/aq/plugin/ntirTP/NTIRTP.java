@@ -55,6 +55,7 @@ public final class NTIRTP extends JavaPlugin {
         getCommand("sethome").setExecutor(new sethome());
         getCommand("home").setExecutor(new home());
         getCommand("delhome").setExecutor(new delhome());
+        getCommand("tpo").setExecutor(new tpo());
         getServer().getPluginManager().registerEvents(new PlayerFirstJoin(),this);
         getServer().getPluginManager().registerEvents(new Death(),this);
         getServer().getPluginManager().registerEvents(new DefaultOnlineLocation(),this);
