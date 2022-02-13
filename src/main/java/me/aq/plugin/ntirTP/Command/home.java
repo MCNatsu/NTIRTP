@@ -26,7 +26,7 @@ public class home implements CommandExecutor {
         }
 
         if(args.length != 1){
-            p.sendMessage(plugin.format + ChatColor.RED + "請輸入你要傳送的重生點!");
+            p.sendMessage(plugin.format + ChatColor.RED + "請輸入你要傳送的紀錄點!");
             return false;
         }
 

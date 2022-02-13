@@ -46,6 +46,7 @@ public final class NTIRTP extends JavaPlugin {
         }
 
         getCommand("tpa").setExecutor(new TP());
+        getCommand("tpahere").setExecutor(new tpahere());
         getCommand("agree").setExecutor(new Agree());
         getCommand("deny").setExecutor(new Deny());
         getCommand("Cancel").setExecutor(new Cancel());

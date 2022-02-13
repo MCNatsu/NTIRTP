@@ -32,7 +32,7 @@ public class SQLeditor {
         PreparedStatement ps3;
         try {
             ps = plugin.SQL.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS TPList "
-                    + "(RNAME VARCHAR(100), RUUID VARCHAR(100),TNAME VARCHAR(100), TUUID VARCHAR(100), PRIMARY KEY(RNAME))");
+                    + "(RNAME VARCHAR(100), RUUID VARCHAR(100),TNAME VARCHAR(100), TUUID VARCHAR(100),TYPE VARCHAR(100) ,PRIMARY KEY(RNAME))");
 
             ps.executeUpdate();
         }catch (SQLException e) {
@@ -67,14 +67,15 @@ public class SQLeditor {
         }
     }
 
-    public void request(Player requester,Player target) {
+    public void request(Player requester,Player target, String type) {
         if(!existTP(requester)) {
             try {
-                PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("INSERT INTO TPList (RNAME,RUUID,TNAME,TUUID) VALUES(?,?,?,?)");
+                PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("INSERT INTO TPList (RNAME,RUUID,TNAME,TUUID,TYPE) VALUES(?,?,?,?,?)");
                 ps.setString(1, requester.getDisplayName());
                 ps.setString(2, requester.getUniqueId().toString());
                 ps.setString(3, target.getDisplayName());
                 ps.setString(4, target.getUniqueId().toString());
+                ps.setString(5,type);
                 ps.executeUpdate();
 
             } catch (SQLException e) {
@@ -392,6 +393,22 @@ public class SQLeditor {
             if(rs.next()){
                 server = rs.getString("Server");
                 return server;
+            }
+            return null;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getType(Player requester){
+        try {
+            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT TYPE FROM TPList WHERE RUUID=?");
+            ps.setString(1,requester.getUniqueId().toString());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
+                String type = rs.getString("TYPE");
+                return type;
             }
             return null;
         }catch (SQLException e){

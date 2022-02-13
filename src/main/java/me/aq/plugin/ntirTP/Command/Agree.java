@@ -35,6 +35,28 @@ public class Agree implements CommandExecutor {
 
         if(args.length == 0){
 
+            if(plugin.data.getType(requester).equalsIgnoreCase("tpaHere")){
+                Location location = requester.getLocation();
+
+                target.sendMessage(plugin.format +ChatColor.GREEN + "成功同意請求!");
+                requester.sendMessage(plugin.format + ChatColor.GREEN + "對方已同意你的請求");
+                target.sendMessage(plugin.format + ChatColor.GRAY + "請稍後" +ChatColor.RED + "3" + ChatColor.GREEN + "秒後傳送...");
+
+                plugin.data.setback(target,target.getServer().getMotd(),target.getLocation());
+
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+
+
+                        target.teleport(location);
+                        target.sendMessage(plugin.format + ChatColor.YELLOW + "正在傳送...");
+                        plugin.data.cancelRequest(requester);
+                    }
+                }.runTaskLater(plugin, 60);
+                return true;
+            }
+
             Location location = target.getLocation();
 
             target.sendMessage(plugin.format +ChatColor.GREEN + "成功同意請求!");
