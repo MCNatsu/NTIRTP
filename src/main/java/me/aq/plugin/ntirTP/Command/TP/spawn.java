@@ -1,4 +1,4 @@
-package me.aq.plugin.ntirTP.Command;
+package me.aq.plugin.ntirTP.Command.TP;
 
 import me.aq.plugin.ntirTP.NTIRTP;
 import net.md_5.bungee.api.ChatColor;

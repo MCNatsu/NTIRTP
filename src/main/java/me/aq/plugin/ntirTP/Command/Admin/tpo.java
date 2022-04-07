@@ -1,4 +1,4 @@
-package me.aq.plugin.ntirTP.Command;
+package me.aq.plugin.ntirTP.Command.Admin;
 
 import me.aq.plugin.ntirTP.NTIRTP;
 import org.bukkit.Bukkit;

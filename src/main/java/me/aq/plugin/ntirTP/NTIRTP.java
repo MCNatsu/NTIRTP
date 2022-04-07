@@ -1,6 +1,15 @@
 package me.aq.plugin.ntirTP;
 
-import me.aq.plugin.ntirTP.Command.*;
+import me.aq.plugin.ntirTP.Command.Admin.setSpawn;
+import me.aq.plugin.ntirTP.Command.Admin.tpo;
+import me.aq.plugin.ntirTP.Command.Home.delhome;
+import me.aq.plugin.ntirTP.Command.Home.home;
+import me.aq.plugin.ntirTP.Command.Home.homelist;
+import me.aq.plugin.ntirTP.Command.Home.sethome;
+import me.aq.plugin.ntirTP.Command.TAB.homeTAB;
+import me.aq.plugin.ntirTP.Command.TP.TP;
+import me.aq.plugin.ntirTP.Command.TP.spawn;
+import me.aq.plugin.ntirTP.Command.TP.tpahere;
 import me.aq.plugin.ntirTP.Event.*;
 import me.aq.plugin.ntirTP.SQL.SQLMain;
 import me.aq.plugin.ntirTP.SQL.SQLeditor;
@@ -57,6 +66,8 @@ public final class NTIRTP extends JavaPlugin {
         getCommand("home").setExecutor(new home());
         getCommand("delhome").setExecutor(new delhome());
         getCommand("tpo").setExecutor(new tpo());
+        getCommand("homelist").setExecutor(new homelist());
+        getCommand("home").setTabCompleter(new homeTAB());
         getServer().getPluginManager().registerEvents(new PlayerFirstJoin(),this);
         getServer().getPluginManager().registerEvents(new Death(),this);
         getServer().getPluginManager().registerEvents(new DefaultOnlineLocation(),this);

@@ -417,6 +417,31 @@ public class SQLeditor {
         return null;
     }
 
+    public List<String> getlist(Player p){
+
+        try {
+            List<String> homelist = new ArrayList<>();
+            homelist.clear();
+
+
+            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT NAME FROM homelist WHERE UUID=?");
+            ps.setString(1,p.getUniqueId().toString());
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                for (int cur = 0;cur < HomeCount(p); cur++, rs.next()){
+                    homelist.add(cur,rs.getString("NAME"));
+                }
+                return homelist;
+            }
+
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public int HomeCount(Player p){
         try {
             PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT COUNT(UUID) AS COUNT FROM HomeList WHERE UUID=?");

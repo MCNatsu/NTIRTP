@@ -1,4 +1,4 @@
-package me.aq.plugin.ntirTP.Command;
+package me.aq.plugin.ntirTP.Command.Home;
 
 import me.aq.plugin.ntirTP.NTIRTP;
 import org.bukkit.ChatColor;

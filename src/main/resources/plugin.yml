@@ -39,5 +39,9 @@ commands:
   tpahere:
     usage:
     description:
+  homelist:
+    usage:
+    description:
+    aliases: list
 
 
