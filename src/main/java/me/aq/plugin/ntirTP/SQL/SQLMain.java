@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class SQLMain {
     private String host = "localhost";
     private String port = "3306";
-    private String database = "ntirplayerdata";
+    private String database = "ntir_tpdata";
     private String user = "NatsuServer";
     private String password = "TaiWanIsVeryGood";
 
