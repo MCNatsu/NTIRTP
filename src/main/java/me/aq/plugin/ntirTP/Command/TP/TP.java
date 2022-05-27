@@ -21,8 +21,20 @@ public class TP implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
         plugin = NTIRTP.getPlugin();
-
         Player p = (Player) sender;
+
+        if(plugin.coolDowns.containsKey(p.getUniqueId())){
+
+            Long TimeLeft = plugin.coolDowns.get(p.getUniqueId()) - System.currentTimeMillis();
+            if(TimeLeft > 0){
+                p.sendMessage(plugin.format + ChatColor.RED + "傳送冷卻尚未結束!"
+                        + ChatColor.GRAY + "(剩餘秒數:" + ChatColor.RED + (double) TimeLeft/1000 + ChatColor.GRAY + "秒)");
+                return false;
+            }
+
+        }
+
+
 
         Player target = Bukkit.getPlayerExact(args[0]);
 
@@ -67,7 +79,7 @@ public class TP implements CommandExecutor {
                     plugin.data.cancelRequest(p);
                 }
             }
-        }.runTaskLater(plugin, 1200);
+        }.runTaskLater(plugin, 600);
 
         return true;
 

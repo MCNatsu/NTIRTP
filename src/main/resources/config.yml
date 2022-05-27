@@ -1,2 +1,11 @@
 DefaultOnlineLocation: false
-EnableHome: false
+#Teleport function
+EnableHome: true
+EnableTP: true
+#Teleport cool-downs
+Cooldown: 20.0
+#Wait Time
+TP-WaitTime: 2.0
+Spawn-WaitTime: 2.0
+Home-WaitTime: 2.0
+

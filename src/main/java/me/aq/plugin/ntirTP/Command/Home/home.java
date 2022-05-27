@@ -18,7 +18,22 @@ public class home implements CommandExecutor {
 
         plugin = NTIRTP.getPlugin();
 
+        double delay = plugin.getConfig().getDouble("Home-WaitTime")*20;
+
         Player p = (Player) sender;
+
+        if(plugin.coolDowns.containsKey(p.getUniqueId())){
+
+            Long TimeLeft = plugin.coolDowns.get(p.getUniqueId()) - System.currentTimeMillis();
+            if(TimeLeft > 0){
+                p.sendMessage(plugin.format + net.md_5.bungee.api.ChatColor.RED + "傳送冷卻尚未結束!"
+                        + ChatColor.GRAY + "(剩餘秒數:" + ChatColor.RED + (double) TimeLeft/1000 + ChatColor.GRAY + "秒)");
+                return false;
+            }
+
+        }
+
+        plugin.coolDowns.put(p.getUniqueId(),System.currentTimeMillis() + (long) plugin.getConfig().getDouble("Cooldown")*1000);
 
         if(plugin.data.HomeCount(p) <= 0){
             p.sendMessage(plugin.format + ChatColor.RED + "你沒有設置任何紀錄點!" + ChatColor.YELLOW + "請使用/sethome設置");
@@ -37,15 +52,15 @@ public class home implements CommandExecutor {
 
         plugin.data.setback(p,p.getServer().getMotd(),p.getLocation());
         Location home = plugin.data.getHome(args[0],p);
-        p.sendMessage(plugin.format + ChatColor.GRAY + "請稍後" + ChatColor.RED + "3" + ChatColor.GREEN + "秒後傳送...");
+        p.sendMessage(plugin.format + ChatColor.GRAY + "請稍後" + ChatColor.RED + delay/20 + ChatColor.GRAY + "秒後傳送...");
         new BukkitRunnable(){
             @Override
             public void run() {
                 p.teleport(home);
-                p.sendMessage(plugin.format + net.md_5.bungee.api.ChatColor.YELLOW + "正在傳送至紀錄點...");
+                p.sendMessage(plugin.format + net.md_5.bungee.api.ChatColor.GRAY + "正在傳送至紀錄點...");
 
             }
-        }.runTaskLater(plugin, 60);
+        }.runTaskLater(plugin, (long) delay);
 
         return true;
     }

@@ -30,10 +30,30 @@ public class sethome implements CommandExecutor {
             return false;
         }
 
+        if(p.hasPermission("NTIR.sponser")){
+            if(plugin.data.HomeCount(p) >= 10){
+                p.sendMessage(plugin.format + ChatColor.RED + "你的紀錄點數量已達上限!" + ChatColor.YELLOW + "(目前記錄點上限:10)");
+                return false;
+            }
+
+            plugin.data.setHome(args[0],p,p.getServer().getMotd(),p.getLocation());
+            p.sendMessage(plugin.format + ChatColor.GREEN + "成功設置名為" + ChatColor.LIGHT_PURPLE + args[0] + ChatColor.GREEN + "的紀錄點");
+            return true;
+
+        }
+
+        if(p.hasPermission("NTIR.daddy")){
+            if(plugin.data.HomeCount(p) >= 7){
+                p.sendMessage(plugin.format + ChatColor.RED + "你的紀錄點數量已達上限!" + ChatColor.YELLOW + "(目前記錄點上限:7)");
+                return false;
+            }
+            plugin.data.setHome(args[0],p,p.getServer().getMotd(),p.getLocation());
+            p.sendMessage(plugin.format + ChatColor.GREEN + "成功設置名為" + ChatColor.LIGHT_PURPLE + args[0] + ChatColor.GREEN + "的紀錄點");
+            return true;
+        }
+
         if(plugin.data.HomeCount(p) >= 5){
-
             p.sendMessage(plugin.format + ChatColor.RED + "你的紀錄點數量已達上限!" + ChatColor.YELLOW + "(目前記錄點上限:5)");
-
             return false;
         }
 

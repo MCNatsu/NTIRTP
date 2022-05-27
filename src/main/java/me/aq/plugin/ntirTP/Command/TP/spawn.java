@@ -18,6 +18,8 @@ public class spawn implements CommandExecutor {
 
         plugin = NTIRTP.getPlugin();
 
+        double delay = plugin.getConfig().getDouble("Spawn-WaitTime")*20;
+
         Player p = (Player) sender;
 
         if(args.length != 0){
@@ -27,15 +29,15 @@ public class spawn implements CommandExecutor {
         Location location = plugin.data.getSpawn(p.getServer().getMotd());
 
         plugin.data.setback(p,p.getServer().getMotd(),p.getLocation());
-        p.sendMessage(plugin.format + ChatColor.GRAY + "請稍後" +ChatColor.RED + "3" + ChatColor.GREEN + "秒後傳送...");
+        p.sendMessage(plugin.format + ChatColor.GRAY + "請稍後" +ChatColor.RED + delay/20 + ChatColor.GRAY + "秒後傳送...");
 
         new BukkitRunnable(){
             @Override
             public void run() {
                 p.teleport(location);
-                p.sendMessage(plugin.format + ChatColor.YELLOW + "正在傳送至重生點...");
+                p.sendMessage(plugin.format + ChatColor.GRAY + "正在傳送至重生點...");
             }
-        }.runTaskLater(plugin, 60);
+        }.runTaskLater(plugin, (long) delay);
 
         return true;
     }

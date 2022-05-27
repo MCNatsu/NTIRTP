@@ -17,14 +17,18 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.UUID;
 
 public final class NTIRTP extends JavaPlugin {
 
+    public HashMap<UUID,Long> coolDowns = new HashMap<>();
+    public HashMap<UUID,Long> lastMove = new HashMap<>();
     public SQLMain SQL;
     public SQLeditor data;
     private static NTIRTP plugin;
     FileConfiguration config = getConfig();
-    public String format = ChatColor.GRAY+ "[" + ChatColor.BLUE + "NTIR傳送" + ChatColor.GRAY + "]" + ChatColor.RESET + "";
+    public String format = ChatColor.GRAY+ "[" + ChatColor.GOLD + "傳送" + ChatColor.GRAY + "]" + ChatColor.RESET + "";
 
 
     public static NTIRTP getPlugin() {
@@ -51,21 +55,30 @@ public final class NTIRTP extends JavaPlugin {
             Bukkit.getLogger().info("DISABLING THE PLUGIN...");
             this.getServer().getPluginManager().disablePlugin(this);
         }
+        //tp
+        if(getConfig().getBoolean("EnableTP")) {
+            getCommand("tpa").setExecutor(new TP());
+            getCommand("tpahere").setExecutor(new tpahere());
+            getCommand("agree").setExecutor(new Agree());
+            getCommand("deny").setExecutor(new Deny());
+            getCommand("Cancel").setExecutor(new Cancel());
+            getCommand("back").setExecutor(new back());
+            getCommand("tpo").setExecutor(new tpo());
+        }
 
-        getCommand("tpa").setExecutor(new TP());
-        getCommand("tpahere").setExecutor(new tpahere());
-        getCommand("agree").setExecutor(new Agree());
-        getCommand("deny").setExecutor(new Deny());
-        getCommand("Cancel").setExecutor(new Cancel());
-        getCommand("back").setExecutor(new back());
+        //spawn
         getCommand("spawn").setExecutor(new spawn());
         getCommand("setspawn").setExecutor(new setSpawn());
-        getCommand("sethome").setExecutor(new sethome());
-        getCommand("home").setExecutor(new home());
-        getCommand("delhome").setExecutor(new delhome());
-        getCommand("tpo").setExecutor(new tpo());
-        getCommand("homelist").setExecutor(new homelist());
-        getCommand("home").setTabCompleter(new homeTAB());
+
+        //home
+        if(getConfig().getBoolean("EnableHome")) {
+            getCommand("sethome").setExecutor(new sethome());
+            getCommand("home").setExecutor(new home());
+            getCommand("delhome").setExecutor(new delhome());
+            getCommand("homelist").setExecutor(new homelist());
+            getCommand("home").setTabCompleter(new homeTAB());
+        }
+
         getServer().getPluginManager().registerEvents(new PlayerFirstJoin(),this);
         getServer().getPluginManager().registerEvents(new Death(),this);
         getServer().getPluginManager().registerEvents(new DefaultOnlineLocation(),this);
