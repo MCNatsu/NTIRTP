@@ -22,13 +22,13 @@ public class setSpawn implements CommandExecutor {
             if(args.length == 0) {
                 Location location = p.getLocation();
                 String server = p.getServer().getMotd();
-                plugin.data.setSpawn(server,location);
+                NTIRTP.data.setSpawn(server,location);
                 p.getWorld().setSpawnLocation(location);
-                p.sendMessage(plugin.format +ChatColor.GREEN + "成功設置重生點");
+                p.sendMessage(NTIRTP.format +ChatColor.GREEN + "成功設置重生點");
             }
 
         }else {
-            p.sendMessage(plugin.format + ChatColor.RED + "你沒有此權限");
+            p.sendMessage(NTIRTP.format + ChatColor.RED + "你沒有此權限");
         }
 
         return false;

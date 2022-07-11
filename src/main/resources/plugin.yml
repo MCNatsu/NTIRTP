@@ -43,5 +43,13 @@ commands:
     usage:
     description:
     aliases: list
+  rtp:
+    usage:
+    description:
+    aliases: rt
+  reloadtpconfig:
+    usage:
+    description:
+    aliases: rtc
 
 

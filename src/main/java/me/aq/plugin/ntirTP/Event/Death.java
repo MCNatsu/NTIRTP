@@ -17,8 +17,8 @@ public class Death implements Listener {
         plugin=NTIRTP.getPlugin();
         Player p = e.getEntity();
 
-        plugin.data.setback(p,p.getServer().getMotd(),p.getLocation());
-        p.sendMessage(plugin.format + ChatColor.LIGHT_PURPLE + "已紀錄死亡位置!使用" + ChatColor.GOLD + "/back" + ChatColor.LIGHT_PURPLE +"回到死亡位置");
+        NTIRTP.data.setback(p,p.getServer().getMotd(),p.getLocation());
+        p.sendMessage(NTIRTP.format + ChatColor.LIGHT_PURPLE + "已紀錄死亡位置!使用" + ChatColor.GOLD + "/back" + ChatColor.LIGHT_PURPLE +"回到死亡位置");
 
     }
 

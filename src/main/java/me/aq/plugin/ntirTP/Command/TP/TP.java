@@ -27,7 +27,7 @@ public class TP implements CommandExecutor {
 
             Long TimeLeft = plugin.coolDowns.get(p.getUniqueId()) - System.currentTimeMillis();
             if(TimeLeft > 0){
-                p.sendMessage(plugin.format + ChatColor.RED + "傳送冷卻尚未結束!"
+                p.sendMessage(NTIRTP.format + ChatColor.RED + "傳送冷卻尚未結束!"
                         + ChatColor.GRAY + "(剩餘秒數:" + ChatColor.RED + (double) TimeLeft/1000 + ChatColor.GRAY + "秒)");
                 return false;
             }
@@ -39,25 +39,26 @@ public class TP implements CommandExecutor {
         Player target = Bukkit.getPlayerExact(args[0]);
 
         if(args.length != 1){
-            p.sendMessage(plugin.format + ChatColor.RED + "請輸入你要發送請求的玩家!");
+            p.sendMessage(NTIRTP.format + ChatColor.RED + "請輸入你要發送請求的玩家!");
             return false;
         }
 
         if(target == null){
-            p.sendMessage(plugin.format + ChatColor.RED + "該玩家不存在或不在線上!");
+            p.sendMessage(NTIRTP.format + ChatColor.RED + "該玩家不存在或不在線上!");
             return false;
         }
 
-        if(plugin.data.existTP(p)){
-            p.sendMessage(plugin.format + ChatColor.RED + "你有發送給" + ChatColor.LIGHT_PURPLE + plugin.data.getTarget(p).getDisplayName() + "的請求!請稍後在試!");
+        if(NTIRTP.data.existTP(p)){
+            p.sendMessage(NTIRTP.format + ChatColor.RED + "你有發送給" + ChatColor.LIGHT_PURPLE + NTIRTP.data.getTarget(p).getDisplayName() + "的請求!請稍後在試!");
             return false;
         }
 
-        plugin.data.request(p,target,"tpa");
+        NTIRTP.data.request(p,target,"tpa");
 
-        p.sendMessage(plugin.format +ChatColor.GREEN + "成功傳送TP請求至" + ChatColor.AQUA + target.getDisplayName() + ChatColor.LIGHT_PURPLE + "可輸入/cancel來取消請求");
+        p.sendMessage(NTIRTP.format +ChatColor.GREEN + "成功傳送TP請求至" + ChatColor.AQUA + target.getDisplayName());
+        p.sendMessage(NTIRTP.format + ChatColor.LIGHT_PURPLE + "可輸入/cancel來取消請求");
 
-        TextComponent agree = new TextComponent(plugin.format + ChatColor.AQUA + "玩家" + ChatColor.LIGHT_PURPLE + p.getDisplayName() + ChatColor.AQUA + "請求TP到你這裡" + ChatColor.GREEN + " [同意]" );
+        TextComponent agree = new TextComponent(NTIRTP.format + ChatColor.AQUA + "玩家" + ChatColor.LIGHT_PURPLE + p.getDisplayName() + ChatColor.AQUA + "請求TP到你這裡" + ChatColor.GREEN + " [同意]" );
         agree.setBold(true);
         agree.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/agree"));
         agree.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("可以點擊此處同意請求").color(ChatColor.GREEN).italic(true).create()));
@@ -73,10 +74,10 @@ public class TP implements CommandExecutor {
         new BukkitRunnable(){
             @Override
             public void run() {
-                if(plugin.data.existTP(p)) {
-                    target.sendMessage(plugin.format + ChatColor.RED + "玩家" + ChatColor.YELLOW + p.getDisplayName() + ChatColor.RED + "傳送給你的tp請求已失效");
-                    p.sendMessage(plugin.format + ChatColor.RED + "你傳送給玩家" + ChatColor.YELLOW + target.getDisplayName() + ChatColor.RED + "的tp請求已失效");
-                    plugin.data.cancelRequest(p);
+                if(NTIRTP.data.existTP(p)) {
+                    target.sendMessage(NTIRTP.format + ChatColor.RED + "玩家" + ChatColor.YELLOW + p.getDisplayName() + ChatColor.RED + "傳送給你的tp請求已失效");
+                    p.sendMessage(NTIRTP.format + ChatColor.RED + "你傳送給玩家" + ChatColor.YELLOW + target.getDisplayName() + ChatColor.RED + "的tp請求已失效");
+                    NTIRTP.data.cancelRequest(p);
                 }
             }
         }.runTaskLater(plugin, 600);

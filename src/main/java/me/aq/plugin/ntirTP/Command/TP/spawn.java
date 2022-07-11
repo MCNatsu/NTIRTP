@@ -26,16 +26,16 @@ public class spawn implements CommandExecutor {
             return false;
         }
 
-        Location location = plugin.data.getSpawn(p.getServer().getMotd());
+        Location location = NTIRTP.data.getSpawn(p.getServer().getMotd());
 
-        plugin.data.setback(p,p.getServer().getMotd(),p.getLocation());
-        p.sendMessage(plugin.format + ChatColor.GRAY + "請稍後" +ChatColor.RED + delay/20 + ChatColor.GRAY + "秒後傳送...");
+        NTIRTP.data.setback(p,p.getServer().getMotd(),p.getLocation());
+        p.sendMessage(NTIRTP.format + ChatColor.GOLD + "正在發動轉移魔法 " + ChatColor.GRAY + "請稍後" +ChatColor.RED + delay/20 + ChatColor.GRAY + "秒...");
 
         new BukkitRunnable(){
             @Override
             public void run() {
                 p.teleport(location);
-                p.sendMessage(plugin.format + ChatColor.GRAY + "正在傳送至重生點...");
+                p.sendMessage(NTIRTP.format + ChatColor.GRAY + "正在傳送至重生點...");
             }
         }.runTaskLater(plugin, (long) delay);
 

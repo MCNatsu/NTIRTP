@@ -1,3 +1,6 @@
+#prefix
+prefix: §7[§3傳送§7]§r
+#Teleport player to Spawn everytime when they Join
 DefaultOnlineLocation: false
 #Teleport function
 EnableHome: true
@@ -8,4 +11,5 @@ Cooldown: 20.0
 TP-WaitTime: 2.0
 Spawn-WaitTime: 2.0
 Home-WaitTime: 2.0
+
 

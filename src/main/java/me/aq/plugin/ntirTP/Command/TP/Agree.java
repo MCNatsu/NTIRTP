@@ -19,42 +19,45 @@ import java.util.Map;
 
 public class Agree implements CommandExecutor {
 
-    private NTIRTP plugin;
+    private static NTIRTP plugin;
     Map<String,Long> StartMoveCheck = new HashMap<String,Long>();
+    private static final String format = NTIRTP.format;
+    private static final double tpCoolDown = NTIRTP.tpCoolDown;
+    private static final double tpWaitTime = NTIRTP.tpWaitTime;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         plugin = NTIRTP.getPlugin();
 
-        double delay = plugin.getConfig().getDouble("TP-WaitTime")*20;
+        double delay = tpWaitTime*20;
 
         Player target = (Player) sender;
 
-        if(!plugin.data.existTPT(target)){
-            target.sendMessage(plugin.format + ChatColor.RED + "你沒有待確認的請求!");
+        if(!NTIRTP.data.existTPT(target)){
+            target.sendMessage(format + ChatColor.RED + "你沒有待確認的請求!");
             return false;
         }
 
-        Player requester = plugin.data.getRequester(target);
+        Player requester = NTIRTP.data.getRequester(target);
 
         if(args.length == 0){
 
-            if(plugin.data.getType(requester).equalsIgnoreCase("tpaHere")){
+            if(NTIRTP.data.getType(requester).equalsIgnoreCase("tpaHere")){
                 Location location = requester.getLocation();
 
-                target.sendMessage(plugin.format +ChatColor.GREEN + "成功同意請求!");
-                requester.sendMessage(plugin.format + ChatColor.GREEN + "對方已同意你的請求");
-                target.sendMessage(plugin.format + ChatColor.GRAY + "請稍後" +ChatColor.RED + delay/20 + ChatColor.GRAY + "秒後傳送...");
+                target.sendMessage(format +ChatColor.GREEN + "成功同意請求!");
+                requester.sendMessage(format + ChatColor.GREEN + "對方已同意你的請求");
+                target.sendMessage(format + ChatColor.GOLD + "正在發動轉移魔法 " + ChatColor.GRAY + "請稍後" +ChatColor.RED + delay/20 + ChatColor.GRAY + "秒...");
 
-                plugin.data.setback(target,target.getServer().getMotd(),target.getLocation());
+                NTIRTP.data.setback(target,target.getServer().getMotd(),target.getLocation());
 
                 new BukkitRunnable(){
                     @Override
                     public void run() {
                         target.teleport(location);
-                        target.sendMessage(plugin.format + ChatColor.GRAY + "正在傳送...");
-                        plugin.data.cancelRequest(requester);
+                        target.sendMessage(format + ChatColor.GRAY + "正在傳送...");
+                        NTIRTP.data.cancelRequest(requester);
                     }
                 }.runTaskLater(plugin, (long) delay);
                 return true;
@@ -62,23 +65,23 @@ public class Agree implements CommandExecutor {
 
             Location location = target.getLocation();
 
-            target.sendMessage(plugin.format +ChatColor.GREEN + "成功同意請求!");
+            target.sendMessage(format +ChatColor.GREEN + "成功同意請求!");
             StartMoveCheck.put(requester.getDisplayName() ,System.currentTimeMillis());
-            requester.sendMessage(plugin.format + ChatColor.GREEN + "對方已同意你的請求");
-            requester.sendMessage(plugin.format + ChatColor.GRAY + "請稍後" +ChatColor.RED + delay/20 + ChatColor.GRAY + "秒後傳送...");
+            requester.sendMessage(format + ChatColor.GREEN + "對方已同意你的請求");
+            requester.sendMessage(format + ChatColor.GOLD + "正在發動轉移魔法 " + ChatColor.GRAY + "請稍後" +ChatColor.RED + delay/20 + ChatColor.GRAY + "秒...");
 
-            plugin.data.setback(requester,requester.getServer().getMotd(),requester.getLocation());
+            NTIRTP.data.setback(requester,requester.getServer().getMotd(),requester.getLocation());
 
             new BukkitRunnable(){
                 @Override
                 public void run() {
 
                     requester.teleport(location);
-                    requester.sendMessage(plugin.format + ChatColor.GRAY + "正在傳送...");
-                    plugin.data.cancelRequest(requester);
+                    requester.sendMessage(format + ChatColor.GRAY + "正在傳送...");
+                    NTIRTP.data.cancelRequest(requester);
                 }
             }.runTaskLater(plugin, (long) delay);
-            plugin.coolDowns.put(requester.getUniqueId(),System.currentTimeMillis() + (long) plugin.getConfig().getDouble("Cooldown")*1000);
+            plugin.coolDowns.put(requester.getUniqueId(),System.currentTimeMillis() + (long) tpCoolDown*1000);
             return true;
         }
 

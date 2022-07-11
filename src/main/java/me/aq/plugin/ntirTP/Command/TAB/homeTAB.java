@@ -21,11 +21,11 @@ public class homeTAB implements TabCompleter {
 
         if(command.getName().equalsIgnoreCase("home")){
 
-            if(plugin.data.HomeCount(p) <=0){
+            if(NTIRTP.data.HomeCount(p) <=0){
                 return null;
             }
 
-            return plugin.data.getlist(p);
+            return NTIRTP.data.getlist(p);
         }
 
         return null;

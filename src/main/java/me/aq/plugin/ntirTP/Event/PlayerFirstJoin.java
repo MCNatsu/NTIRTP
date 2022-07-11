@@ -19,9 +19,9 @@ public class PlayerFirstJoin implements Listener {
         if(e.getPlayer().hasPlayedBefore()){return;}
 
         Player p = e.getPlayer();
-        Location location = plugin.data.getSpawn(p.getServer().getMotd());
+        Location location = NTIRTP.data.getSpawn(p.getServer().getMotd());
         p.teleport(location);
-        p.setBedSpawnLocation(plugin.data.getSpawn(p.getServer().getMotd()));
+        p.setBedSpawnLocation(NTIRTP.data.getSpawn(p.getServer().getMotd()));
 
     }
 }

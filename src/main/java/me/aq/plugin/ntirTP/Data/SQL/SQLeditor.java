@@ -1,4 +1,4 @@
-package me.aq.plugin.ntirTP.SQL;
+package me.aq.plugin.ntirTP.Data.SQL;
 
 import me.aq.plugin.ntirTP.NTIRTP;
 import org.bukkit.Bukkit;
@@ -18,11 +18,7 @@ import java.util.UUID;
 
 public class SQLeditor {
 
-    private NTIRTP plugin;
-    public void SQLGetter(NTIRTP plugin){
-        this.plugin = plugin;
-
-    }
+    private static final NTIRTP plugin = NTIRTP.getPlugin();
 
     public void createTable(){
 
@@ -31,7 +27,7 @@ public class SQLeditor {
         PreparedStatement ps2;
         PreparedStatement ps3;
         try {
-            ps = plugin.SQL.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS TPList "
+            ps = NTIRTP.SQL.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS TPList "
                     + "(RNAME VARCHAR(100), RUUID VARCHAR(100),TNAME VARCHAR(100), TUUID VARCHAR(100),TYPE VARCHAR(100) ,PRIMARY KEY(RNAME))");
 
             ps.executeUpdate();
@@ -40,7 +36,7 @@ public class SQLeditor {
         }
 
         try {
-            ps1 = plugin.SQL.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS HomeList "
+            ps1 = NTIRTP.SQL.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS HomeList "
                     + "(NAME VARCHAR(100), Player VARCHAR(100), UUID VARCHAR(100), Server VARCHAR(100), World VARCHAR(100),x VARCHAR(100), y VARCHAR(100),z VARCHAR(100), date VARCHAR(100), PRIMARY KEY(date))");
 
             ps1.executeUpdate();
@@ -49,7 +45,7 @@ public class SQLeditor {
         }
 
         try {
-            ps2 = plugin.SQL.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS SpawnList "
+            ps2 = NTIRTP.SQL.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS SpawnList "
                     + "(Server VARCHAR(100), World VARCHAR(100),x VARCHAR(100), y VARCHAR(100),z VARCHAR(100), PRIMARY KEY(Server))");
 
             ps2.executeUpdate();
@@ -58,7 +54,7 @@ public class SQLeditor {
         }
 
         try {
-            ps3 = plugin.SQL.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS BackList "
+            ps3 = NTIRTP.SQL.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS BackList "
                     + "(Player VARCHAR(100), UUID VARCHAR(100), Server VARCHAR(100), World VARCHAR(100),x VARCHAR(100), y VARCHAR(100),z VARCHAR(100), PRIMARY KEY(Player))");
 
             ps3.executeUpdate();
@@ -70,7 +66,7 @@ public class SQLeditor {
     public void request(Player requester,Player target, String type) {
         if(!existTP(requester)) {
             try {
-                PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("INSERT INTO TPList (RNAME,RUUID,TNAME,TUUID,TYPE) VALUES(?,?,?,?,?)");
+                PreparedStatement ps = NTIRTP.SQL.getConnection().prepareStatement("INSERT INTO TPList (RNAME,RUUID,TNAME,TUUID,TYPE) VALUES(?,?,?,?,?)");
                 ps.setString(1, requester.getDisplayName());
                 ps.setString(2, requester.getUniqueId().toString());
                 ps.setString(3, target.getDisplayName());
@@ -86,7 +82,7 @@ public class SQLeditor {
 
     public void cancelRequest(Player p){
         try {
-            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("DELETE FROM TPList WHERE RUUID=?");
+            PreparedStatement ps = NTIRTP.SQL.getConnection().prepareStatement("DELETE FROM TPList WHERE RUUID=?");
             ps.setString(1,p.getUniqueId().toString());
             ps.executeUpdate();
         }catch (SQLException e){
@@ -98,7 +94,7 @@ public class SQLeditor {
     public void setSpawn(String server, Location spawn){
         try {
             delSpawn(server);
-            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("INSERT INTO SpawnList (Server,World,x,y,z) VALUES(?,?,?,?,?)");
+            PreparedStatement ps = NTIRTP.SQL.getConnection().prepareStatement("INSERT INTO SpawnList (Server,World,x,y,z) VALUES(?,?,?,?,?)");
             ps.setString(1,server);
             ps.setString(2,spawn.getWorld().getName());
             ps.setString(3, String.valueOf(spawn.getX()));
@@ -118,7 +114,7 @@ public class SQLeditor {
 
         try {
 
-            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("INSERT INTO HomeList (NAME,Player,UUID,Server,World,x,y,z,date) VALUES (?,?,?,?,?,?,?,?,?)");
+            PreparedStatement ps = NTIRTP.SQL.getConnection().prepareStatement("INSERT INTO HomeList (NAME,Player,UUID,Server,World,x,y,z,date) VALUES (?,?,?,?,?,?,?,?,?)");
             ps.setString(1,name);
             ps.setString(2,p.getDisplayName());
             ps.setString(3,p.getUniqueId().toString());
@@ -139,7 +135,7 @@ public class SQLeditor {
 
     public void delHome(String name,Player p){
         try {
-            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("DELETE FROM HomeList WHERE NAME=? AND UUID=?");
+            PreparedStatement ps = NTIRTP.SQL.getConnection().prepareStatement("DELETE FROM HomeList WHERE NAME=? AND UUID=?");
             ps.setString(1,name);
             ps.setString(2,p.getUniqueId().toString());
             ps.executeUpdate();
@@ -150,7 +146,7 @@ public class SQLeditor {
 
     public void delSpawn(String server){
         try {
-            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("DELETE FROM SpawnList WHERE SERVER=?");
+            PreparedStatement ps = NTIRTP.SQL.getConnection().prepareStatement("DELETE FROM SpawnList WHERE SERVER=?");
             ps.setString(1,server);
             ps.executeUpdate();
         }catch (SQLException e){
@@ -160,7 +156,7 @@ public class SQLeditor {
 
     public void delBack(Player p){
         try {
-            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("DELETE FROM BackList WHERE UUID=?");
+            PreparedStatement ps = NTIRTP.SQL.getConnection().prepareStatement("DELETE FROM BackList WHERE UUID=?");
             ps.setString(1,p.getUniqueId().toString());
             ps.executeUpdate();
         }catch (SQLException e){
@@ -175,7 +171,7 @@ public class SQLeditor {
 
         try {
 
-            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("INSERT INTO BackList (Player,UUID,Server,World,x,y,z) VALUES(?,?,?,?,?,?,?)");
+            PreparedStatement ps = NTIRTP.SQL.getConnection().prepareStatement("INSERT INTO BackList (Player,UUID,Server,World,x,y,z) VALUES(?,?,?,?,?,?,?)");
             ps.setString(1,p.getDisplayName());
             ps.setString(2,p.getUniqueId().toString());
             ps.setString(3,server);
@@ -193,13 +189,10 @@ public class SQLeditor {
     public boolean existTP(Player p){
 
         try {
-            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT RUUID FROM TPList WHERE RUUID=?");
+            PreparedStatement ps = NTIRTP.SQL.getConnection().prepareStatement("SELECT RUUID FROM TPList WHERE RUUID=?");
             ps.setString(1,p.getUniqueId().toString());
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                return true;
-            }
-            return false;
+            return rs.next();
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -209,13 +202,10 @@ public class SQLeditor {
     public boolean existTPT(Player p){
 
         try {
-            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT TUUID FROM TPList WHERE TUUID=?");
+            PreparedStatement ps = NTIRTP.SQL.getConnection().prepareStatement("SELECT TUUID FROM TPList WHERE TUUID=?");
             ps.setString(1,p.getUniqueId().toString());
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                return true;
-            }
-            return false;
+            return rs.next();
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -224,14 +214,11 @@ public class SQLeditor {
 
     public boolean homeExist(Player p, String name){
         try {
-            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT NAME FROM HomeList WHERE UUID=? AND NAME=?");
+            PreparedStatement ps = NTIRTP.SQL.getConnection().prepareStatement("SELECT NAME FROM HomeList WHERE UUID=? AND NAME=?");
             ps.setString(1,p.getUniqueId().toString());
             ps.setString(2,name);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                return true;
-            }
-            return false;
+            return rs.next();
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -240,7 +227,7 @@ public class SQLeditor {
 
     public Player getRequester(Player target){
         try {
-            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT RNAME FROM TPList WHERE TUUID=?");
+            PreparedStatement ps = NTIRTP.SQL.getConnection().prepareStatement("SELECT RNAME FROM TPList WHERE TUUID=?");
             ps.setString(1,target.getUniqueId().toString());
             ResultSet rs = ps.executeQuery();
             String NAME = null;
@@ -257,7 +244,7 @@ public class SQLeditor {
 
     public Player getTarget(Player requester){
         try {
-            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT TNAME FROM TPList WHERE RUUID=?");
+            PreparedStatement ps = NTIRTP.SQL.getConnection().prepareStatement("SELECT TNAME FROM TPList WHERE RUUID=?");
             ps.setString(1,requester.getUniqueId().toString());
             ResultSet rs = ps.executeQuery();
             String NAME = null;
@@ -276,10 +263,10 @@ public class SQLeditor {
     public Location getSpawn(String server){
         try {
 
-            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT x FROM SpawnList WHERE Server=?");
-            PreparedStatement ps0 = plugin.SQL.getConnection().prepareStatement("SELECT World FROM SpawnList WHERE Server=?");
-            PreparedStatement ps1 = plugin.SQL.getConnection().prepareStatement("SELECT y FROM SpawnList WHERE Server=?");
-            PreparedStatement ps2 = plugin.SQL.getConnection().prepareStatement("SELECT z FROM SpawnList WHERE Server=?");
+            PreparedStatement ps = NTIRTP.SQL.getConnection().prepareStatement("SELECT x FROM SpawnList WHERE Server=?");
+            PreparedStatement ps0 = NTIRTP.SQL.getConnection().prepareStatement("SELECT World FROM SpawnList WHERE Server=?");
+            PreparedStatement ps1 = NTIRTP.SQL.getConnection().prepareStatement("SELECT y FROM SpawnList WHERE Server=?");
+            PreparedStatement ps2 = NTIRTP.SQL.getConnection().prepareStatement("SELECT z FROM SpawnList WHERE Server=?");
             ps0.setString(1,server);
             ps.setString(1,server);
             ps1.setString(1,server);
@@ -310,10 +297,10 @@ public class SQLeditor {
     public Location getBack(String uuid){
         try {
 
-            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT x FROM BackList WHERE UUID=?");
-            PreparedStatement ps0 = plugin.SQL.getConnection().prepareStatement("SELECT World FROM BackList WHERE UUID=?");
-            PreparedStatement ps1 = plugin.SQL.getConnection().prepareStatement("SELECT y FROM BackList WHERE UUID=?");
-            PreparedStatement ps2 = plugin.SQL.getConnection().prepareStatement("SELECT z FROM BackList WHERE UUID=?");
+            PreparedStatement ps = NTIRTP.SQL.getConnection().prepareStatement("SELECT x FROM BackList WHERE UUID=?");
+            PreparedStatement ps0 = NTIRTP.SQL.getConnection().prepareStatement("SELECT World FROM BackList WHERE UUID=?");
+            PreparedStatement ps1 = NTIRTP.SQL.getConnection().prepareStatement("SELECT y FROM BackList WHERE UUID=?");
+            PreparedStatement ps2 = NTIRTP.SQL.getConnection().prepareStatement("SELECT z FROM BackList WHERE UUID=?");
             ps0.setString(1,uuid);
             ps.setString(1,uuid);
             ps1.setString(1,uuid);
@@ -344,10 +331,10 @@ public class SQLeditor {
     public Location getHome(String name,Player p){
 
         try {
-            PreparedStatement ps1 = plugin.SQL.getConnection().prepareStatement("SELECT World FROM HomeList WHERE NAME=? AND UUID=?");
-            PreparedStatement ps2 = plugin.SQL.getConnection().prepareStatement("SELECT x FROM HomeList WHERE NAME=? AND UUID=?");
-            PreparedStatement ps3 = plugin.SQL.getConnection().prepareStatement("SELECT y FROM HomeList WHERE NAME=? AND UUID=?");
-            PreparedStatement ps4 = plugin.SQL.getConnection().prepareStatement("SELECT z FROM HomeList WHERE NAME=? AND UUID=?");
+            PreparedStatement ps1 = NTIRTP.SQL.getConnection().prepareStatement("SELECT World FROM HomeList WHERE NAME=? AND UUID=?");
+            PreparedStatement ps2 = NTIRTP.SQL.getConnection().prepareStatement("SELECT x FROM HomeList WHERE NAME=? AND UUID=?");
+            PreparedStatement ps3 = NTIRTP.SQL.getConnection().prepareStatement("SELECT y FROM HomeList WHERE NAME=? AND UUID=?");
+            PreparedStatement ps4 = NTIRTP.SQL.getConnection().prepareStatement("SELECT z FROM HomeList WHERE NAME=? AND UUID=?");
             ps1.setString(1,name);
             ps2.setString(1,name);
             ps3.setString(1,name);
@@ -385,7 +372,7 @@ public class SQLeditor {
 
     public String getHomeSv(String name, Player p){
         try {
-            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT Server FROM HomeList WHERE NAME=? AND UUID=?");
+            PreparedStatement ps = NTIRTP.SQL.getConnection().prepareStatement("SELECT Server FROM HomeList WHERE NAME=? AND UUID=?");
             ps.setString(1, name);
             ps.setString(2,p.getUniqueId().toString());
             ResultSet rs = ps.executeQuery();
@@ -403,7 +390,7 @@ public class SQLeditor {
 
     public String getType(Player requester){
         try {
-            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT TYPE FROM TPList WHERE RUUID=?");
+            PreparedStatement ps = NTIRTP.SQL.getConnection().prepareStatement("SELECT TYPE FROM TPList WHERE RUUID=?");
             ps.setString(1,requester.getUniqueId().toString());
             ResultSet rs = ps.executeQuery();
             if (rs.next()){
@@ -424,7 +411,7 @@ public class SQLeditor {
             homelist.clear();
 
 
-            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT NAME FROM homelist WHERE UUID=?");
+            PreparedStatement ps = NTIRTP.SQL.getConnection().prepareStatement("SELECT NAME FROM homelist WHERE UUID=?");
             ps.setString(1,p.getUniqueId().toString());
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
@@ -444,7 +431,7 @@ public class SQLeditor {
 
     public int HomeCount(Player p){
         try {
-            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT COUNT(UUID) AS COUNT FROM HomeList WHERE UUID=?");
+            PreparedStatement ps = NTIRTP.SQL.getConnection().prepareStatement("SELECT COUNT(UUID) AS COUNT FROM HomeList WHERE UUID=?");
             ps.setString(1, p.getUniqueId().toString());
             ResultSet rs = ps.executeQuery();
             int count = 0;

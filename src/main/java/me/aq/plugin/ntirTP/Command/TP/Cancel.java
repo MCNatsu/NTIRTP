@@ -17,17 +17,17 @@ public class Cancel implements CommandExecutor {
         plugin = NTIRTP.getPlugin();
 
         Player requester = (Player) sender;
-        Player target = plugin.data.getTarget(requester);
+        Player target = NTIRTP.data.getTarget(requester);
 
-        if(!plugin.data.existTP(requester)){
-            requester.sendMessage(plugin.format + ChatColor.RED + "你沒有已發送的傳送請求!");
+        if(!NTIRTP.data.existTP(requester)){
+            requester.sendMessage(NTIRTP.format + ChatColor.RED + "你沒有已發送的傳送請求!");
             return false;
         }
 
         if(args.length == 0){
-            plugin.data.cancelRequest(requester);
-            requester.sendMessage(plugin.format + ChatColor.GREEN + "你已成功取消請求");
-            target.sendMessage(plugin.format + ChatColor.YELLOW + "玩家" + ChatColor.LIGHT_PURPLE + requester.getDisplayName() + ChatColor.YELLOW + "傳送給你的請求已被取消!");
+            NTIRTP.data.cancelRequest(requester);
+            requester.sendMessage(NTIRTP.format + ChatColor.GREEN + "你已成功取消請求");
+            target.sendMessage(NTIRTP.format + ChatColor.YELLOW + "玩家" + ChatColor.LIGHT_PURPLE + requester.getDisplayName() + ChatColor.YELLOW + "傳送給你的請求已被取消!");
         }
 
         return false;

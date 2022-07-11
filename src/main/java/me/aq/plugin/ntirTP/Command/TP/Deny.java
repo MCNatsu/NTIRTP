@@ -21,13 +21,18 @@ public class Deny implements CommandExecutor {
 
         Player target = (Player) sender;
 
-        Player requester = plugin.data.getRequester(target);
+        if(!NTIRTP.data.existTPT(target)){
+            target.sendMessage(NTIRTP.format + ChatColor.RED + "你沒有待確認的請求!");
+            return false;
+        }
+
+        Player requester = NTIRTP.data.getRequester(target);
 
         if(args.length ==0){
 
-            target.sendMessage(plugin.format + ChatColor.GREEN + "你已拒絕來自" + ChatColor.LIGHT_PURPLE + requester.getDisplayName() + "的傳送請求");
-            requester.sendMessage(plugin.format + ChatColor.YELLOW + "對方拒絕了你的請求!");
-            plugin.data.cancelRequest(requester);
+            target.sendMessage(NTIRTP.format + ChatColor.GREEN + "你已拒絕來自" + ChatColor.LIGHT_PURPLE + requester.getDisplayName() + "的傳送請求");
+            requester.sendMessage(NTIRTP.format + ChatColor.YELLOW + "對方拒絕了你的請求!");
+            NTIRTP.data.cancelRequest(requester);
 
         }
 

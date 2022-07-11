@@ -17,7 +17,7 @@ public class DefaultOnlineLocation implements Listener {
         Player p = e.getPlayer();
 
         if(plugin.getConfig().getBoolean("DefaultOnlineLocation")) {
-            p.teleport(plugin.data.getSpawn(p.getServer().getMotd()));
+            p.teleport(NTIRTP.data.getSpawn(p.getServer().getMotd()));
         }
     }
 }

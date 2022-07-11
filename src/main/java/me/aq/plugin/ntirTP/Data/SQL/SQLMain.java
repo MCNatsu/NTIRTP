@@ -1,22 +1,22 @@
-package me.aq.plugin.ntirTP.SQL;
+package me.aq.plugin.ntirTP.Data.SQL;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class SQLMain {
-    private String host = "localhost";
-    private String port = "3306";
-    private String database = "ntir_tpdata";
-    private String user = "NatsuServer";
-    private String password = "TaiWanIsVeryGood";
+    private final String host = "localhost";
+    private final String port = "3306";
+    private final String database = "ntir_tpdata";
+    private final String user = "NatsuServer";
+    private final String password = "TaiWanIsVeryGood";
 
 
     private Connection connection;
 
     public boolean isConnected(){
 
-        return (connection == null ? false : true);
+        return (connection != null);
 
     }
 

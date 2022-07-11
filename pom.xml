@@ -6,10 +6,10 @@
 
     <groupId>me</groupId>
     <artifactId>NTIRTP</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-1</version>
     <packaging>jar</packaging>
 
-    <name>NTIRTP</name>
+    <name>NTIR-TP</name>
 
     <properties>
         <java.version>1.8</java.version>

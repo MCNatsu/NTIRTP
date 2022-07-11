@@ -24,14 +24,14 @@ public class back implements CommandExecutor {
         if(args.length == 0){
 
 
-            p.sendMessage(plugin.format + ChatColor.GRAY + "請稍後" +ChatColor.RED + delay/20 + ChatColor.GRAY + "秒後傳送...");
-            Location location = plugin.data.getBack(p.getUniqueId().toString());
+            p.sendMessage(NTIRTP.format + ChatColor.GOLD + "正在發動轉移魔法 " + ChatColor.GRAY + "請稍後" +ChatColor.RED + delay/20 + ChatColor.GRAY + "秒...");
+            Location location = NTIRTP.data.getBack(p.getUniqueId().toString());
             new BukkitRunnable(){
                 @Override
                 public void run() {
                     p.teleport(location);
-                    p.sendMessage(plugin.format + ChatColor.GRAY + "正在傳送至上個紀錄點...");
-                    plugin.data.setback(p,p.getServer().getMotd(),blocation);
+                    p.sendMessage(NTIRTP.format + ChatColor.GRAY + "正在傳送至上個紀錄點...");
+                    NTIRTP.data.setback(p,p.getServer().getMotd(),blocation);
                 }
             }.runTaskLater(plugin, (long) delay);
             return true;

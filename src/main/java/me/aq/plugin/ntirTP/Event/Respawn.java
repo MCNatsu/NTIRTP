@@ -16,9 +16,9 @@ public class Respawn implements Listener {
         plugin = NTIRTP.getPlugin();
         Player p = e.getPlayer();
 
-        if(p.getBedSpawnLocation() == null | p.getBedSpawnLocation() == plugin.data.getSpawn(p.getServer().getMotd())){
+        if(p.getBedSpawnLocation() == null | p.getBedSpawnLocation() == NTIRTP.data.getSpawn(p.getServer().getMotd())){
 
-            e.setRespawnLocation(plugin.data.getSpawn(p.getServer().getMotd()));
+            e.setRespawnLocation(NTIRTP.data.getSpawn(p.getServer().getMotd()));
 
         }
 
