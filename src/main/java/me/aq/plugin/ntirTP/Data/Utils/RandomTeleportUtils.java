@@ -1,4 +1,4 @@
-package me.aq.plugin.ntirTP.Data.SQL.Utils;
+package me.aq.plugin.ntirTP.Data.Utils;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -10,8 +10,8 @@ import java.util.Random;
 
 public class RandomTeleportUtils {
 
-    private static final HashSet<Material> unSafe = new HashSet<>();
-    static {
+    private final HashSet<Material> unSafe = new HashSet<>();
+    {
         unSafe.add(Material.LAVA);
         unSafe.add(Material.POWDER_SNOW);
         unSafe.add(Material.WATER);
@@ -21,7 +21,8 @@ public class RandomTeleportUtils {
         unSafe.add(Material.SOUL_CAMPFIRE);
     }
 
-    public static Location generateLocation(Player player){
+
+    public Location generateLocation(Player player){
 
         Random random = new Random();
 
@@ -48,7 +49,7 @@ public class RandomTeleportUtils {
         return randomLocation;
     }
 
-    public static boolean isLocationSafe(Location location){
+    public boolean isLocationSafe(Location location){
 
         int x = location.getBlockX();
         int y = location.getBlockY();

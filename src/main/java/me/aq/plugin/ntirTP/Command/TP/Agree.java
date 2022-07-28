@@ -48,7 +48,7 @@ public class Agree implements CommandExecutor {
 
                 target.sendMessage(format +ChatColor.GREEN + "成功同意請求!");
                 requester.sendMessage(format + ChatColor.GREEN + "對方已同意你的請求");
-                target.sendMessage(format + ChatColor.GOLD + "正在發動轉移魔法 " + ChatColor.GRAY + "請稍後" +ChatColor.RED + delay/20 + ChatColor.GRAY + "秒...");
+                target.sendMessage(format + ChatColor.GOLD + "正在傳送 " + ChatColor.GRAY + "請稍後" +ChatColor.RED + delay/20 + ChatColor.GRAY + "秒...");
 
                 NTIRTP.data.setback(target,target.getServer().getMotd(),target.getLocation());
 
@@ -68,7 +68,7 @@ public class Agree implements CommandExecutor {
             target.sendMessage(format +ChatColor.GREEN + "成功同意請求!");
             StartMoveCheck.put(requester.getDisplayName() ,System.currentTimeMillis());
             requester.sendMessage(format + ChatColor.GREEN + "對方已同意你的請求");
-            requester.sendMessage(format + ChatColor.GOLD + "正在發動轉移魔法 " + ChatColor.GRAY + "請稍後" +ChatColor.RED + delay/20 + ChatColor.GRAY + "秒...");
+            requester.sendMessage(format + ChatColor.GOLD + "正在傳送 " + ChatColor.GRAY + "請稍後" +ChatColor.RED + delay/20 + ChatColor.GRAY + "秒...");
 
             NTIRTP.data.setback(requester,requester.getServer().getMotd(),requester.getLocation());
 

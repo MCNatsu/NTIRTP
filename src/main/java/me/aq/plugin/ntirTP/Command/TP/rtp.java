@@ -1,6 +1,5 @@
 package me.aq.plugin.ntirTP.Command.TP;
 
-import me.aq.plugin.ntirTP.Data.SQL.Utils.RandomTeleportUtils;
 import me.aq.plugin.ntirTP.NTIRTP;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -38,9 +37,9 @@ public class rtp implements CommandExecutor {
             return false;
         }
 
-        Location randomLocation = RandomTeleportUtils.generateLocation(p);
-        while (!RandomTeleportUtils.isLocationSafe(randomLocation)){
-            randomLocation = RandomTeleportUtils.generateLocation(p);
+        Location randomLocation = plugin.rtpChecks.generateLocation(p);
+        while (!plugin.rtpChecks.isLocationSafe(randomLocation)){
+            randomLocation = plugin.rtpChecks.generateLocation(p);
         }
 
         p.teleport(randomLocation);

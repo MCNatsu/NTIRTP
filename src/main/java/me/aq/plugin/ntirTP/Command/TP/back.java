@@ -24,7 +24,7 @@ public class back implements CommandExecutor {
         if(args.length == 0){
 
 
-            p.sendMessage(NTIRTP.format + ChatColor.GOLD + "正在發動轉移魔法 " + ChatColor.GRAY + "請稍後" +ChatColor.RED + delay/20 + ChatColor.GRAY + "秒...");
+            p.sendMessage(NTIRTP.format + ChatColor.GOLD + "正在傳送 " + ChatColor.GRAY + "請稍後" +ChatColor.RED + delay/20 + ChatColor.GRAY + "秒...");
             Location location = NTIRTP.data.getBack(p.getUniqueId().toString());
             new BukkitRunnable(){
                 @Override

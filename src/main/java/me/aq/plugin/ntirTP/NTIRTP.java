@@ -9,6 +9,7 @@ import me.aq.plugin.ntirTP.Command.Home.homelist;
 import me.aq.plugin.ntirTP.Command.Home.sethome;
 import me.aq.plugin.ntirTP.Command.TAB.homeTAB;
 import me.aq.plugin.ntirTP.Command.TP.*;
+import me.aq.plugin.ntirTP.Data.Utils.RandomTeleportUtils;
 import me.aq.plugin.ntirTP.Event.*;
 import me.aq.plugin.ntirTP.Data.SQL.SQLMain;
 import me.aq.plugin.ntirTP.Data.SQL.SQLeditor;
@@ -27,6 +28,7 @@ public final class NTIRTP extends JavaPlugin {
     public static SQLeditor data;
     private static NTIRTP plugin;
     public FileConfiguration config = getConfig();
+    public RandomTeleportUtils rtpChecks = new RandomTeleportUtils();
 
     //StaticConfigDef
     public static String format;

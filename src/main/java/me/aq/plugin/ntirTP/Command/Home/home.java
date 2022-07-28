@@ -8,6 +8,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class home implements CommandExecutor {
 
@@ -25,16 +26,7 @@ public class home implements CommandExecutor {
 
         Player p = (Player) sender;
 
-        if(plugin.coolDowns.containsKey(p.getUniqueId())){
 
-            long TimeLeft = plugin.coolDowns.get(p.getUniqueId()) - System.currentTimeMillis();
-            if(TimeLeft > 0){
-                p.sendMessage(format + net.md_5.bungee.api.ChatColor.RED + "傳送冷卻尚未結束!"
-                        + ChatColor.GRAY + "(剩餘秒數:" + ChatColor.RED + (double) TimeLeft/1000 + ChatColor.GRAY + "秒)");
-                return false;
-            }
-
-        }
 
         if(NTIRTP.data.HomeCount(p) <= 0){
             p.sendMessage(format + ChatColor.RED + "你沒有設置任何紀錄點!" + ChatColor.YELLOW + "請使用/sethome設置");
@@ -51,10 +43,25 @@ public class home implements CommandExecutor {
             return false;
         }
 
+        if(plugin.coolDowns.containsKey(p.getUniqueId())){
+
+            long TimeLeft = plugin.coolDowns.get(p.getUniqueId()) - System.currentTimeMillis();
+            if(TimeLeft > 0){
+                p.sendMessage(format + net.md_5.bungee.api.ChatColor.RED + "傳送冷卻尚未結束!"
+                        + ChatColor.GRAY + "(剩餘秒數:" + ChatColor.RED + (double) TimeLeft/1000 + ChatColor.GRAY + "秒)");
+                return false;
+            }
+
+        }
+
         NTIRTP.data.setback(p,p.getServer().getMotd(),p.getLocation());
         Location home = NTIRTP.data.getHome(args[0],p);
+        if(!plugin.rtpChecks.isLocationSafe(home)){
+            p.sendMessage(format + ChatColor.RED + "你的紀錄點位置已不再安全, 系統會將你傳送到該座標的最高點!");
+            home.setY(home.getWorld().getHighestBlockYAt(home));
+        }
         p.sendMessage(format + ChatColor.GOLD + "正在傳送 " + ChatColor.GRAY + "請稍後" + ChatColor.RED + delay/20 + ChatColor.GRAY + "秒...");
-        new BukkitRunnable(){
+        BukkitTask task =  new BukkitRunnable(){
             @Override
             public void run() {
                 p.teleport(home);
@@ -62,6 +69,8 @@ public class home implements CommandExecutor {
 
             }
         }.runTaskLater(plugin, (long) delay);
+
+        task.cancel();
 
         plugin.coolDowns.put(p.getUniqueId(),System.currentTimeMillis() + (long) tpCoolDowns*1000);
 
